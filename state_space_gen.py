@@ -46,14 +46,25 @@ def generate_moves_and_resulting_boardstates(in_path: str,
                                              boardstates_path: str) -> None:
     """Generates files for moves and board states given an input file."""
     board, player_turn = in_to_dict(in_path)
-    print("board: ")
-    pprint(board)
-    print(f"player_turn: {player_turn}")
+    # print("board: ")
+    # pprint(board)
     utils.print_board(board)
-    print("board:", board)
+    print(f"player_turn: {player_turn}")
+    # print("board:", board)
 
     valid_marble_groups = gen_valid_marble_groups(board, player_turn)
     print("valid_marble_groups:", valid_marble_groups)
+    # for group in valid_marble_groups:
+    #     board_repped_group = {}
+    #     for marble_coord in group:
+    #         board_repped_group[marble_coord] = player_turn
+    #     utils.print_board(board_repped_group)
+    #     print("==============================")
+
+    # moves = []
+    # for group in valid_marble_groups:
+    #     moves += gen_valid_group_moves(board, group)
+    # print("valid_moves:", moves)
 
 
 def in_to_dict(in_path: str) -> tuple[dict[int, int], int]:
@@ -80,19 +91,19 @@ def gen_valid_marble_groups(board: dict[int, int], color: int):
     """Generates valid marble groups for a given board state."""
     player_marbles = board.copy()
     _filter_for_color(player_marbles, color)
-    # print("player marbles:", player_marbles)
+    print("player marbles:", player_marbles)
     coords = list(player_marbles.keys())
-    # print("coords:", coords)
+    print("coords:", coords)
     all_groups = _gen_combinations(coords)
     print("all_groups:", all_groups)
 
     _filter_for_valid_groups(all_groups)
     valid_groups = all_groups
-    print("valid_groups:", valid_groups)
+    # print("valid_groups:", valid_groups)
     return valid_groups
 
 
-def _filter_for_valid_groups(groups: list[int]):
+def _filter_for_valid_groups(groups: list[tuple[int, ...]]):
     """Filters out invalid groups."""
     groups_copy = groups.copy()
     to_remove = []
@@ -118,6 +129,9 @@ def _filter_for_valid_groups(groups: list[int]):
                         and group[2] == group[0] + dir_val + dir_val):
                     valid_three_length = True
 
+            # TODO: works for (34, 44, 54)(0, +10, +20)
+            #  should also check for (34, 54, 44), (54, 34, 44) ...
+
             if not valid_three_length:
                 to_remove.append(i)
             continue
@@ -137,7 +151,7 @@ def _filter_for_color(board: dict[int, int], color: int):
         del board[key]
 
 
-def _gen_combinations(marble_coords: list[int]):
+def _gen_combinations(marble_coords: list[int]) -> list[tuple[int, ...]]:
     """Generates all combinations of length 1, 2, 3 given a set of coords.
 
     :return: The list of all combinations of length 1, 2, and 3
@@ -159,7 +173,7 @@ def gen_valid_inlines():
     pass
 
 
-def gen_broadsides():
+def _gen_broadsides():
     """Generates all broadside moves, valid or invalid."""
     pass
 
