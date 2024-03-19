@@ -163,7 +163,27 @@ def _gen_combinations(marble_coords: list[int]) -> list[tuple[int, ...]]:
     return len_1 + len_2 + len_3
 
 
-def gen_valid_broadsides():
+def gen_valid_group_moves(board: dict[int, int],
+                          player_color: int,
+                          group: tuple[int, ...]) -> tuple[list[int], int]:
+    """Generates all valid moves."""
+    broadside_dirs, inline_dirs = get_directions(group)
+    # get broadside directions
+    # get inline directions
+    # gen_valid_broadsides(group, broadside_dirs)
+    # gen_valid_inlines(group, inline_dirs)
+    # return broadsides + inlines
+    pass
+
+def get_directions(group: tuple[int, ...]) -> tuple[list[int], list[int]]:
+    """Determines the directions for broadside and inline moves."""
+    pass
+
+
+def gen_valid_broadsides(board: dict[int, int],
+                         player_color: int,
+                         group: tuple[int, ...],
+                         dir_values: list[int]) -> tuple[list[int], int]:
     """Generates valid broadside moves."""
     pass
 
