@@ -105,9 +105,8 @@ def gen_valid_marble_groups(board: dict[int, int], color: int):
 
 def _filter_for_valid_groups(groups: list[tuple[int, ...]]):
     """Filters out invalid groups."""
-    groups_copy = groups.copy()
     to_remove = []
-    for i, group in enumerate(groups_copy):
+    for i, group in enumerate(groups):
         if len(group) == 1:
             continue
 
@@ -117,6 +116,7 @@ def _filter_for_valid_groups(groups: list[tuple[int, ...]]):
             for dir_val in directions.values():
                 if group[1] == group[0] + dir_val:
                     valid_two_length = True
+                    break
             if not valid_two_length:
                 to_remove.append(i)
             continue
